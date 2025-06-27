@@ -36,3 +36,262 @@
     transform: rotate(360deg);
   }
 }
+
+
+body,
+div,
+h1,
+h2,
+h3,
+h4,
+h5,
+p {
+  margin: 0;
+  padding: 0;
+}
+
+h2{
+  font-family: 'Aubresh';
+  color: yellow;
+  margin: 20px;
+}
+
+@font-face {
+  font-family: 'Aubresh';
+  font-style: normal;
+  src: url('./assets/fonts/Aurebesh-English.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'StarWars';
+  font-style: normal;
+  src: url('./assets/fonts/Starjedi.ttf') format('truetype');
+}
+
+:root {
+  font-family: Arial, Helvetica, sans-serif;
+  --dark1: black;
+  --light1: white;
+  --dark2: darkblue;
+  --light2: lightblue;
+  background-color: var(--dark1);
+  background-image: url('./assets/deathstar.jpg');
+  color: var(--light1);
+}
+
+.title {
+  font-family: 'StarWars';
+  color: yellow;
+}
+
+button {
+  background-color: lightslategray;
+  color: white;
+  font-weight: bold;
+  font-family: 'StarWars';
+  margin: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid yellow;
+  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease; /* Smooth transition for hover effects */
+}
+
+button:hover {
+  background-color: darkslategray; /* Change background color on hover */
+  color: yellow; /* Change text color on hover */
+  border: 1px solid white; /* Change border color on hover */
+  transform: scale(1.1); /* Scale the button to 105% of its original size */
+}
+
+.backButton {
+  background-color: green;
+  color: white;
+  font-weight: bold;
+  font-family: 'StarWars';
+  margin: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 3px solid tan;
+  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease; /* Smooth transition for hover effects */
+}
+
+.backButton:hover {
+  background-color: red; /* Change background color on hover */
+
+  color: black; /* Change text color on hover */
+  border: 3px solid rgb(36, 35, 35); /* Change border color on hover */
+  transform: scale(1.1); /* Scale the button to 105% of its original size */
+}
+
+input {
+  display: block;
+  width: 85%;
+  font-weight: bold;
+  font-family: 'Aubresh';
+  font-size: 1.1em;
+  line-height: 1.5em;
+  border: none;
+  border-bottom: 2px solid var(--dark2);
+  outline: none;
+  margin: 5px;
+}
+
+label {
+  font-size: 1.1em;
+  font-family: 'Aubresh';
+}
+
+.small {
+  font-size: small;
+  font-weight: normal;
+}
+
+/* Characters */
+#charactersList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 0;
+}
+
+#charactersList div {
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid var(--dark2);
+  border-radius: 5px;
+  color: var(--dark2);
+  background-color: var(--light2);
+  font-weight: bold;
+}
+
+
+h1 {
+  margin: 50px;
+  font-family: 'Aubresh';
+  color: yellow;
+}
+
+#generalInfo {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  border: 20px;
+  border-color: lightblue;
+}
+
+#generalInfo p {
+  padding: 20px;
+  margin: 10px;
+  color: red;
+  background-color: black;
+  border: 3px solid rgb(18, 188, 218); 
+}
+
+#generalInfo span {
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+section#planets,
+section#characters,
+section#films {
+  margin: 50px;
+}
+
+section#planets ul,
+section#characters ul,
+section#films ul {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+		gap: 15px;
+		padding: 0;
+  list-style-type: none;
+  padding: 0;
+}
+
+section#planets a,
+section#characters a,
+section#films a {
+  display: inline-block;
+  text-decoration: none;
+  font-size: 1.1em;
+  text-align: center;
+  background-color: lightslategray;
+  color: white;
+  font-weight: bold;
+  font-family: 'StarWars';
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  border: 1px solid yellow;
+  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease; /* Smooth transition for hover effects */
+}
+
+
+section#planets a:hover,
+section#characters a:hover,
+section#films a:hover {
+  background-color: darkslategray; /* Change background color on hover */
+  color: yellow; /* Change text color on hover */
+  border: 1px solid white; /* Change border color on hover */
+  transform: scale(1.1); /* Scale the link to 105% of its original size */
+}
+
+section#shipInfo {
+	margin: 50px;
+}
+
+section#shipInfo h2 {
+	font-family: 'Aubresh';
+	color: yellow;
+	margin: 20px;
+}
+
+section#shipInfo p {
+	background-color: lightslategray;
+	color: white;
+	font-weight: bold;
+	font-family: 'StarWars';
+	padding: 10px;
+	margin: 10px;
+	border-radius: 5px;
+	border: 1px solid yellow;
+	display: inline-block;
+}
+
+section#shipInfo span {
+	font-weight: bold;
+	font-size: 1.1em;
+	color: white;
+	font-family: 'StarWars';
+}
+
+#startup-gif {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: black;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 9999;
+	overflow: hidden;
+}
+
+#startup-gif img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+
+.fade-out {
+	animation: fadeOut 1s forwards;
+}
+
+@keyframes fadeOut {
+	from { opacity: 1; }
+	to { opacity: 0; visibility: hidden; }
+}

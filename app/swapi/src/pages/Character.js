@@ -1,0 +1,45 @@
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+
+
+const Character = () => {
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+
+        const fetchData = async () => {
+            try{
+              const response = await fetch('http://localhost:9001/api/characters');
+              if (!response.ok) {
+                throw new Error('Network response was not ok');
+              }
+              const jsonData = await response.json();
+              setData(jsonData);
+            }
+            catch (error) {
+              console.error('Fetch error:', error);
+            }
+          }
+        fetchData();
+    }
+    , []);
+
+    return (
+        <div>
+            <h2>Star Wars Characters</h2>
+            <div >
+                {data?.map(character => 
+                    <button key={character.id} >
+                        <div >
+                            {character.name}
+                        </div>
+                    </button>
+                )}
+            </div>
+
+        </div>
+    );
+};
+
+
+export default Character;

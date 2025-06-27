@@ -1,19 +1,35 @@
 import {useEffect, useState } from 'react';
 import './App.css';
+import { BrowserRouter, Route, Routes, Switch, Link } from 'react-router-dom';
+import Character from './pages/Character';
 
 function App() {
   const [data, setData] = useState([]);
  useEffect(()=>{
-  fetch('/json/films.json')
-    .then(response => response.json())
-    .then(setData).then(console.log(data));
+  const fetchData = async () => {
+    try{
+      const response = await fetch('http://localhost:9001/api/characters');
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const jsonData = await response.json();
+      setData(jsonData);
+    }
+    catch (error) {
+      console.error('Fetch error:', error);
+    }
+  }
+  fetchData();
  }, []);
   
  return (
-   <div className='App-header'>
-      {data.map(film => 
-       <div key={film.pk}>{film.pk} - {film.fields.title}</div>)}
-    </div>
+
+  <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Character/>} />
+
+    </Routes>
+  </BrowserRouter>
   );
 }
 
