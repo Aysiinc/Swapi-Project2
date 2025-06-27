@@ -1,6 +1,7 @@
 import {useEffect, useState } from 'react';
 import './App.css';
 import { BrowserRouter, Route, Routes, Switch, Link } from 'react-router-dom';
+import  Characters from './pages/Characters';
 import Character from './pages/Character';
 
 function App() {
@@ -26,7 +27,8 @@ function App() {
 
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<Character/>} />
+      <Route path="/" element={<Characters/>} />
+      <Route path="/characters/:id" element={<Character/>} />
 
     </Routes>
   </BrowserRouter>
