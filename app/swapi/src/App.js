@@ -3,6 +3,7 @@ import './App.css';
 import { BrowserRouter, Route, Routes, Switch, Link } from 'react-router-dom';
 import  Characters from './pages/Characters';
 import Character from './pages/Character';
+import Planet from './pages/Planet';
 
 function App() {
   const [data, setData] = useState([]);
@@ -29,7 +30,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Characters/>} />
       <Route path="/characters/:id" element={<Character/>} />
-
+      <Route path="/planets/:id" element={<Planet/>} />
     </Routes>
   </BrowserRouter>
   );
