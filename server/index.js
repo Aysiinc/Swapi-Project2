@@ -4,38 +4,100 @@ import jsonServer from 'json-server';
 import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './swagger.js';
 
-// Create an express web server
 const app = express();
 app.use(cors());
-// Add Swagger support
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use('/api/swagger.json', (_, res) => {
   res.setHeader('Content-Type', 'application/json');
   res.send(swaggerSpec);
 });
-// Set the port
 const port = process.env.PORT || 9001;
 
-// GET route for /api/films/:id/characters
-/**
- * @swagger
- * /api/films/{id}/characters:
- *   get:
- *     summary: Get a list of characters for a specfic film id.
- *     description: Returns a list of characters
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: number
- *         description: The ID of the film to retrieve
- *     responses:
- *       200:
- *         description: OK
- */
 
+app.get('/api/characters', (req, res) => {
+  const characters = router.db.get('characters').value().map(character => ({ "id": character.id, "name": character.name }));
+  res.json(characters);
+}
+);
 
+app.get('/api/characters/:id', (req, res) => {
+  const { id } = req.params;
+  const character = router.db.get('characters').find({ id: +id }).value();
+  if (!character) {
+    return res.status(404).json({ error: 'Character not found' });
+  }
+  res.json(character);
+}
+);
+
+app.get('/api/films', (req, res) => {
+  const films = router.db.get('films').value().map(film => ({ "id": film.id, "title": film.title }));
+  res.json(films);
+});
+
+app.get('/api/films/:id', (req, res) => {   
+  const { id } = req.params;
+  const film = router.db.get('films').find({ id: +id }).value();
+  if (!film) {
+    return res.status(404).json({ error: 'Film not found' });
+  }
+  res.json(film);
+});
+
+app.get('/api/planets', (req, res) => {
+  const planets = router.db.get('planets').value().map(planet => ({ "id": planet.id, "name": planet.name })); 
+  res.json(planets);
+});
+
+app.get('/api/planets/:id', (req, res) => {
+  const { id } = req.params;
+  const planet = router.db.get('planets').find({ id: +id }).value();
+  if (!planet) {
+    return res.status(404).json({ error: 'Planet not found' });
+  }
+  res.json(planet);
+});
+
+app.get('/api/species', (req, res) => {
+  const species = router.db.get('species').value().map(specie => ({ "id": specie.id, "name": specie.name }));
+  res.json(species);
+});
+
+app.get('/api/species/:id', (req, res) => {
+  const { id } = req.params;
+  const specie = router.db.get('species').find({ id: +id }).value();
+  if (!specie) {
+    return res.status(404).json({ error: 'Species not found' });
+  }
+  res.json(specie);
+});
+
+app.get('/api/starships', (req, res) => {
+  const starships = router.db.get('starships').value().map(ship => ({ "id": ship.id, "name": ship.starship_class }));
+  res.json(starships);  
+});
+
+app.get('/api/starships/:id', (req, res) => {
+  const { id } = req.params;
+  const starship = router.db.get('starships').find({ id: +id }).value();
+  if (!starship) {
+    return res.status(404).json({ error: 'Starship not found' });
+  }
+  res.json(starship);
+} );
+
+app.get('/api/vehicles', (req, res) => {
+  const vehicles = router.db.get('vehicles').value().map(vehicle => ({ "id": vehicle.id, "name": vehicle.vehicle_class }));
+  res.json(vehicles);
+});
+app.get('/api/vehicles/:id', (req, res) => {
+  const { id } = req.params;
+  const vehicle = router.db.get('vehicles').find({ id: +id }).value();
+  if (!vehicle) {
+    return res.status(404).json({ error: 'Vehicle not found' });
+  }
+  res.json(vehicle);
+});
 
 app.get('/api/films/:id/characters', (req, res) => {
   const { id } = req.params;
@@ -45,24 +107,7 @@ app.get('/api/films/:id/characters', (req, res) => {
   res.json(characters);
 });
 
-// GET route for /api/characters/:id/films
-/**
- * @swagger
- * /api/characters/{id}/films:
- *   get:
- *     summary: Get a list of films for a specfic characters id.
- *     description: Returns a list of films
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: number
- *         description: The ID of the character to retrieve
- *     responses:
- *       200:
- *         description: OK
- */
+
 app.get('/api/characters/:id/films', (req, res) => {
   const { id } = req.params;
   const junction_data = router.db.get('films_characters').filter({ character_id: +id }).value();
@@ -71,24 +116,6 @@ app.get('/api/characters/:id/films', (req, res) => {
   res.json(films);
 });
 
-// GET route for /api/films/:id/planets
-/**
- * @swagger
- * /api/films/{id}/planets:
- *   get:
- *     summary: Get a list of planets for a specfic film id.
- *     description: Returns a list of planets
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: number
- *         description: The ID of the film to retrieve
- *     responses:
- *       200:
- *         description: OK
- */
 app.get('/api/films/:id/planets', (req, res) => {
   const { id } = req.params;
   const junction_data = router.db.get('films_planets').filter({ film_id: +id }).value();
@@ -97,24 +124,7 @@ app.get('/api/films/:id/planets', (req, res) => {
   res.json(planets);
 });
 
-// GET route for /api/planets/:id/films
-/**
- * @swagger
- * /api/planets/{id}/films:
- *   get:
- *     summary: Get a list of films for a specfic planet id.
- *     description: Returns a list of films
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: number
- *         description: The ID of the planet to retrieve
- *     responses:
- *       200:
- *         description: OK
- */
+
 app.get('/api/planets/:id/films', (req, res) => {
   const { id } = req.params;
   const junction_data = router.db.get('films_planets').filter({ planet_id: +id }).value();
@@ -123,24 +133,6 @@ app.get('/api/planets/:id/films', (req, res) => {
   res.json(films);
 });
 
-// GET route for /api/films/:id/species
-/**
- * @swagger
- * /api/films/{id}/species:
- *   get:
- *     summary: Get a list of species for a specfic film id.
- *     description: Returns a list of species
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: number
- *         description: The ID of the film to retrieve
- *     responses:
- *       200:
- *         description: OK
- */
 app.get('/api/films/:id/species', (req, res) => {
   const { id } = req.params;
   const junction_data = router.db.get('films_species').filter({ film_id: +id }).value();
@@ -149,24 +141,7 @@ app.get('/api/films/:id/species', (req, res) => {
   res.json(species);
 });
 
-// GET route for /api/films/:id/starships
-/**
- * @swagger
- * /api/films/{id}/starships:
- *   get:
- *     summary: Get a list of starships for a specfic film id.
- *     description: Returns a list of starships
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: number
- *         description: The ID of the film to retrieve
- *     responses:
- *       200:
- *         description: OK
- */
+
 app.get('/api/films/:id/starships', (req, res) => {
   const { id } = req.params;
   const junction_data = router.db.get('films_starships').filter({ film_id: +id }).value();
@@ -175,24 +150,7 @@ app.get('/api/films/:id/starships', (req, res) => {
   res.json(starships);
 });
 
-// GET route for /api/films/:id/vehicles
-/**
- * @swagger
- * /api/films/{id}/vehicles:
- *   get:
- *     summary: Get a list of vehicles for a specfic film id.
- *     description: Returns a list of vehicles
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: number
- *         description: The ID of the film to retrieve
- *     responses:
- *       200:
- *         description: OK
- */
+
 app.get('/api/films/:id/vehicles', (req, res) => {
   const { id } = req.params;
   const junction_data = router.db.get('films_vehicles').filter({ film_id: +id }).value();
@@ -201,24 +159,7 @@ app.get('/api/films/:id/vehicles', (req, res) => {
   res.json(vehicles);
 });
 
-// GET route for /api/species/:id/characters
-/**
- * @swagger
- * /api/species/{id}/characters:
- *   get:
- *     summary: Get a list of characters for a specfic species id.
- *     description: Returns a list of characters
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: number
- *         description: The ID of the species to retrieve
- *     responses:
- *       200:
- *         description: OK
- */
+
 app.get('/api/species/:id/characters', (req, res) => {
   const { id } = req.params;
   const junction_data = router.db.get('species_characters').filter({ species_id: +id }).value();
@@ -227,24 +168,7 @@ app.get('/api/species/:id/characters', (req, res) => {
   res.json(characters);
 });
 
-// GET route for /api/starships/:id/characters
-/**
- * @swagger
- * /api/starships/{id}/characters:
- *   get:
- *     summary: Get a list of characters for a specfic starship id.
- *     description: Returns a list of characters
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: number
- *         description: The ID of the starship to retrieve
- *     responses:
- *       200:
- *         description: OK
- */
+
 app.get('/api/starships/:id/characters', (req, res) => {
   const { id } = req.params;
   const junction_data = router.db.get('starships_characters').filter({ starship_id: +id }).value();
@@ -253,24 +177,7 @@ app.get('/api/starships/:id/characters', (req, res) => {
   res.json(characters);
 });
 
-// GET route for /api/planets/:id/characters
-/**
- * @swagger
- * /api/planets/{id}/characters:
- *   get:
- *     summary: Get a list of characters for a specfic planet id.
- *     description: Returns a list of characters
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: number
- *         description: The ID of the planet to retrieve
- *     responses:
- *       200:
- *         description: OK
- */
+
 app.get('/api/planets/:id/characters', (req, res) => {
   const { id } = req.params;
   const rawCharacters = router.db.get(`characters`).value()
@@ -280,7 +187,6 @@ app.get('/api/planets/:id/characters', (req, res) => {
 });
 
 
-// Create a router
 const middlewares = jsonServer.defaults();
 app.use(middlewares);
 const router = jsonServer.router('database.json');

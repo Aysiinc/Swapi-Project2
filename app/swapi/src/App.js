@@ -8,22 +8,6 @@ import Film from './pages/Film';
 
 function App() {
   const [data, setData] = useState([]);
- useEffect(()=>{
-  const fetchData = async () => {
-    try{
-      const response = await fetch('http://localhost:9001/api/characters');
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const jsonData = await response.json();
-      setData(jsonData);
-    }
-    catch (error) {
-      console.error('Fetch error:', error);
-    }
-  }
-  fetchData();
- }, []);
   
  return (
 
